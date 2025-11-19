@@ -27,14 +27,14 @@ MCP decouples the "Brain" (the AI) from the "Hands" (the Tools).
 ```mermaid
 graph LR
     subgraph "The Host (User's Environment)"
-        Host[MCP Host (e.g., Claude Desktop, IDE)]
-        Client[MCP Client (Internal Connector)]
+        Host[Host]
+        Client[Client]
     end
     
     subgraph "The Servers (Data Sources)"
-        S1[MCP Server: GitHub]
-        S2[MCP Server: PostgreSQL]
-        S3[MCP Server: Local Files]
+        S1[GitHub Server]
+        S2[PostgreSQL Server]
+        S3[Local Files Server]
     end
     
     Host -- "User asks: 'Check my PRs'" --> Client

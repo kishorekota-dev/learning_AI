@@ -20,8 +20,8 @@ To build truly intelligent systems, we need architectures that understand **stru
 ```mermaid
 graph TD
     User[User Query] --> Router{Router}
-    Router -->|Specific Fact?| Vector[Vector DB (Similarity Search)]
-    Router -->|Complex Relationship?| Graph[Knowledge Graph (Graph Traversal)]
+    Router -->|Specific Fact?| Vector[Vector DB]
+    Router -->|Complex Relationship?| Graph[Knowledge Graph]
     Vector --> Context
     Graph --> Context
     Context --> LLM
