@@ -35,16 +35,16 @@ graph TD
     User[User Input] --> Guard[Safety Guardrail]
     Guard -->|Safe| Supervisor{Supervisor Agent}
     Guard -->|Unsafe| Refusal[Refusal Message]
-    
-    Supervisor -->|Text Query| RAG[RAG Tool (Vector DB)]
-    Supervisor -->|Visual Query| Vision[Vision Tool (GPT-4o)]
-    Supervisor -->|Web Search| Web[Search Tool (Tavily/Google)]
-    
-    RAG --> Context
+
+    Supervisor -->|Text Query| RAG[RAG]
+    Supervisor -->|Visual Query| Vision[Vision]
+    Supervisor -->|Web Search| Web[Web]
+
+    RAG --> Context[Context]
     Vision --> Context
     Web --> Context
-    
-    Context --> Final[Final Answer Generation]
+
+    Context --> Final[Final Answer]
 ```
 
 ## Implementation Steps
