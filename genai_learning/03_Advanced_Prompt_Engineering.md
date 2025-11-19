@@ -141,7 +141,41 @@ Sending a 50-page system prompt with every API call is expensive and slow.
 *   **Without Cache**: You pay for 100 pages of input tokens *every single time*.
 *   **With Cache**: You pay to upload it once. Subsequent calls reference the cache ID (90% cheaper, 80% faster).
 
-## 6. The Future: DSPy (Programming Prompts)
+## 6. Prompt Management in Production
+
+So far we've focused on **how to write a good prompt**. In production, you also need to manage prompts over time the same way you manage code and models.
+
+### 1. Separate Prompts from Code
+Keep long prompts out of your Python files.
+*   Store them as plain text / Markdown in `prompts/`.
+*   Load them at runtime (e.g., `Path("prompts/qa_v3.txt").read_text()`).
+*   This allows non-engineers (PMs, SMEs) to propose changes via PRs.
+
+### 2. Name and Version Your Prompts
+Treat prompts like APIs:
+*   Give each important prompt an **ID** and **version** (e.g., `customer_support:v3`).
+*   Track which prompt version is deployed in which environment (`dev`, `staging`, `prod`).
+*   When a prompt changes, update the version and record why in the commit message.
+
+### 3. Test Prompts with a Golden Dataset
+Before shipping a new prompt version:
+1.  Run it on a fixed set of test questions.
+2.  Score the outputs using an eval framework (see Module 5: RAGAS / LLM-as-a-judge).
+3.  Only promote the new prompt if it beats the old one on key metrics (accuracy, tone, safety).
+
+### 4. Prompt Lifecycle
+You can think of prompts as having a lifecycle:
+> Design → Implement → Evaluate → Approve → Deploy → Monitor → Iterate
+
+Changes to critical prompts (e.g., ones that can trigger tools) should go through **code review** and can even require sign-off from Security / Compliance.
+
+### 5. Safety Constraints Live in Prompts *and* Code
+Prompt management is also part of your **security story**:
+*   Keep a strong, global **System Prompt** that encodes your safety rules.
+*   Use patterns from Module 12 (Sandwiching, XML tags) to avoid prompt injection.
+*   Combine this with external guardrails (Llama Guard, regex filters) so safety doesn't rely on prompts alone.
+
+## 7. The Future: DSPy (Programming Prompts)
 
 Manual prompt engineering (tweaking strings like "You are a helpful assistant") is brittle.
 **DSPy (Declarative Self-improving Language Programs)** is a framework from Stanford that treats prompts as **parameters** to be optimized, not strings to be written.

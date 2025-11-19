@@ -90,7 +90,40 @@ You cannot "eyeball" it. You need a **Golden Dataset**.
 3.  **Score**: Use an "LLM-as-a-Judge" to grade the answers.
     *   *"Compare the generated answer to the perfect answer. Rate similarity 1-5."*
 
-## 6. Summary
+## 6. Closing the Loop: Feedback → Fine-Tuning
+
+In a mature GenAI system, **user feedback is training data in disguise**.
+
+### 1. Collect Signals
+From every interaction, log:
+*   `question`, `context_docs`, `model_answer`.
+*   **Explicit feedback**: thumbs up/down, star ratings.
+*   **Implicit feedback**: user rewrites, copy/paste, escalation to a human agent.
+
+### 2. Build Datasets
+Turn feedback into datasets:
+*   **Supervised fine-tuning data**: `(input → ideal_output)` pairs taken from
+    - Highly rated answers.
+    - Human-corrected answers.
+*   **Preference data**: for alignment methods like RLHF / DPO (see Module 5),
+    store `(input, bad_answer, good_answer)` triples.
+
+### 3. Train Small, Targeted Models
+Use this data to improve **SLMs** instead of always relying on giant foundation models:
+*   Apply **LoRA / QLoRA** adapters on an SLM (Module 5).
+*   Optionally run **DPO** on the preference dataset to better match human
+    preferences (politeness, safety, tone).
+
+### 4. Re-Evaluate Before Deploying
+Before switching models or adapters in production:
+1.  Run the updated model on your **Golden Dataset** (this module).
+2.  Check that key metrics (accuracy, safety, style) improve or at least do not regress.
+3.  Roll out gradually (e.g., 10% of traffic) and monitor.
+
+At this point, feedback has become a **virtuous cycle**:
+> Users → Feedback → Datasets → Fine-Tuned SLM → Better UX → More Feedback.
+
+## 7. Summary
 
 *   **SLMs** let you run AI cheaply and privately.
 *   **Gateways** keep your app running when providers fail.
