@@ -27,8 +27,8 @@ MCP decouples the "Brain" (the AI) from the "Hands" (the Tools).
 ```mermaid
 graph LR
     subgraph "The Host (User's Environment)"
-        Host[MCP Host<br/>(e.g., Claude Desktop, IDE)]
-        Client[MCP Client<br/>(Internal Connector)]
+        Host[MCP Host (e.g., Claude Desktop, IDE)]
+        Client[MCP Client (Internal Connector)]
     end
     
     subgraph "The Servers (Data Sources)"

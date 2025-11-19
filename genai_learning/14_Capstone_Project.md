@@ -36,9 +36,9 @@ graph TD
     Guard -->|Safe| Supervisor{Supervisor Agent}
     Guard -->|Unsafe| Refusal[Refusal Message]
     
-    Supervisor -->|Text Query| RAG[RAG Tool<br/>(Vector DB)]
-    Supervisor -->|Visual Query| Vision[Vision Tool<br/>(GPT-4o)]
-    Supervisor -->|Web Search| Web[Search Tool<br/>(Tavily/Google)]
+    Supervisor -->|Text Query| RAG[RAG Tool (Vector DB)]
+    Supervisor -->|Visual Query| Vision[Vision Tool (GPT-4o)]
+    Supervisor -->|Web Search| Web[Search Tool (Tavily/Google)]
     
     RAG --> Context
     Vision --> Context
